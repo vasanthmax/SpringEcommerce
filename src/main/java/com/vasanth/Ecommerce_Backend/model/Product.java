@@ -19,7 +19,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID productId;
 
     @NotBlank
     @Size(min = 3,message = "Product name should have atleast 3 characters")
