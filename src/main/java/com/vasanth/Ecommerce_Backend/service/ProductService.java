@@ -1,8 +1,8 @@
 package com.vasanth.Ecommerce_Backend.service;
 
 import com.vasanth.Ecommerce_Backend.model.Product;
+import com.vasanth.Ecommerce_Backend.payload.CommonMapper;
 import com.vasanth.Ecommerce_Backend.payload.ProductDTO;
-import com.vasanth.Ecommerce_Backend.payload.ProductMapper;
 import com.vasanth.Ecommerce_Backend.payload.ProductResponse;
 import com.vasanth.Ecommerce_Backend.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,6 @@ public class ProductService {
     private ProductRepo repo;
 
 
-
     public ProductResponse getAllProducts(int pageNumber, int pageSize, String sortBy, String sortDir){
 
         //Sorting
@@ -37,7 +36,7 @@ public class ProductService {
         List<Product> products = pagedProducts.getContent();
 
         //Converting to Product DTO
-        List<ProductDTO> productDTO = products.stream().map(ProductMapper.INSTANCE::toProductDTO).toList();
+        List<ProductDTO> productDTO = products.stream().map(CommonMapper.INSTANCE::toProductDTO).toList();
 
         ProductResponse productResponse = new ProductResponse();
         productResponse.setContent(productDTO);
@@ -45,7 +44,7 @@ public class ProductService {
         productResponse.setPageSize(pagedProducts.getSize());
         productResponse.setTotalElements(pagedProducts.getTotalElements());
         productResponse.setTotalPages(pagedProducts.getTotalPages());
-        productResponse.setLastPage(productResponse.isLastPage());
+        productResponse.setLastPage(pagedProducts.isLast());
 
         return productResponse;
     }
