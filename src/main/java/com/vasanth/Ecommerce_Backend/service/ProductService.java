@@ -176,4 +176,30 @@ public class ProductService {
 
 
     }
+
+    public ProductResponse searchByKeyword(String keyword, int pageNumber, int pageSize, String sortBy, String sortDir) {
+
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
+
+        Page<Product> pagedProducts = repo.findByProductNameContainingOrDescriptionContaining(keyword,keyword,pageable);
+
+        List<Product> products = pagedProducts.getContent();
+
+        List<ProductDTO> productDTO = products.stream().map(CommonMapper.INSTANCE::toProductDTO).toList();
+
+        ProductResponse productResponse = new ProductResponse();
+
+        productResponse.setContent(productDTO);
+        productResponse.setPageNumber(pagedProducts.getNumber());
+        productResponse.setPageSize(pagedProducts.getSize());
+        productResponse.setTotalElements(pagedProducts.getTotalElements());
+        productResponse.setTotalPages(pagedProducts.getTotalPages());
+        productResponse.setLastPage(pagedProducts.isLast());
+
+        return productResponse;
+
+    }
 }

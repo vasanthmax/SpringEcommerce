@@ -43,6 +43,20 @@ public class ProductController {
         return new ResponseEntity<ProductResponse>(productResponse,HttpStatus.OK);
     }
 
+    @GetMapping("/public/products/keyword/{keyword}")
+    public ResponseEntity<ProductResponse> searchByKeyword(
+            @PathVariable("keyword") String keyword,
+            @RequestParam(name = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER,required = false) int pageNumber,
+            @RequestParam(name = "pageSize",defaultValue = AppConstants.PAGE_SIZE,required = false) int pageSize,
+            @RequestParam(name = "sortBy",defaultValue = AppConstants.SORT_PRODUCTS_BY,required = false) String sortBy,
+            @RequestParam(name = "sortDir",defaultValue = AppConstants.SORT_DIR,required = false) String sortDir
+
+    ){
+        ProductResponse productResponse = productService.searchByKeyword(keyword,pageNumber,pageSize,sortBy,sortDir);
+
+        return new ResponseEntity<ProductResponse>(productResponse,HttpStatus.OK);
+    }
+
     @GetMapping("/public/categories/{categoryId}/products")
     public ResponseEntity<ProductResponse> getProductsByCategory(
             @PathVariable("categoryId") UUID categoryId,
