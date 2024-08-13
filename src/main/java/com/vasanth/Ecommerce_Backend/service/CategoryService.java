@@ -3,6 +3,7 @@ package com.vasanth.Ecommerce_Backend.service;
 import com.vasanth.Ecommerce_Backend.exceptions.APIException;
 import com.vasanth.Ecommerce_Backend.exceptions.ResourceNotFoundException;
 import com.vasanth.Ecommerce_Backend.model.Category;
+import com.vasanth.Ecommerce_Backend.model.Product;
 import com.vasanth.Ecommerce_Backend.payload.CategoryDTO;
 import com.vasanth.Ecommerce_Backend.payload.CategoryResponse;
 import com.vasanth.Ecommerce_Backend.payload.CommonMapper;
@@ -23,6 +24,9 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepo categoryRepo;
+
+    @Autowired
+    private ProductService productService;
 
 
     public CategoryDTO createCategory(Category category) {
@@ -86,9 +90,15 @@ public class CategoryService {
         Category savedCategory = categoryRepo.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category","categoryId",categoryId));
 
+        List<Product> products = savedCategory.getProducts();
+
+        for(Product product:products){
+            productService.deleteProduct(product.getProductId());
+        }
+
         categoryRepo.delete(savedCategory);
 
-        return "Category Deleted with the Id:" + categoryId;
+        return "Category Deleted with the Id:" + categoryId + "and Products";
 
     }
 }

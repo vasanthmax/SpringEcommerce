@@ -91,4 +91,33 @@ public class ProductService {
     }
 
 
+    public ProductDTO updateProduct(UUID productId, Product product) {
+        Product savedProduct = repo.findById(productId)
+                .orElseThrow(()-> new ResourceNotFoundException("Product","productId",productId));
+
+        product.setImage(savedProduct.getImage());
+        product.setProductId(productId);
+        product.setCategory(savedProduct.getCategory());
+
+        double specialPrice = product.getPrice() - ((product.getDiscount() * 0.01) * product.getPrice());
+        product.setSpecialPrice(specialPrice);
+
+        Product finalProduct = repo.save(product);
+
+        return CommonMapper.INSTANCE.toProductDTO(finalProduct);
+
+
+    }
+
+
+    public String deleteProduct(UUID productId) {
+
+        Product product = repo.findById(productId)
+                .orElseThrow(()-> new ResourceNotFoundException("Product","productId",productId));
+
+        repo.delete(product);
+
+        return "Product Deleted Successfully";
+
+    }
 }
