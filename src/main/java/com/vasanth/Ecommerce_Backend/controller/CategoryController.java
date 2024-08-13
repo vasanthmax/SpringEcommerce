@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -40,7 +41,7 @@ public class CategoryController {
     }
 
     @PutMapping("/admin/categories/{categoryId}")
-    public ResponseEntity<CategoryDTO> updateCategory(@RequestBody Category category, @PathVariable("categoryId") UUID categoryId){
+    public ResponseEntity<CategoryDTO> updateCategory(@Valid @RequestBody Category category, @PathVariable("categoryId") UUID categoryId){
 
         CategoryDTO categoryDTO = categoryService.updateCategory(category,categoryId);
 

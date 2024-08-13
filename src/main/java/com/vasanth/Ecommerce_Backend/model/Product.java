@@ -34,7 +34,7 @@ public class Product {
     private Integer quantity;
     private double price;
     private double discount;
-    private Integer specialPrice;
+    private double specialPrice;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
