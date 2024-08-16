@@ -28,12 +28,12 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return email;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return password;
+        return email;
     }
 
     @Override

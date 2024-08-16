@@ -2,6 +2,7 @@ package com.vasanth.Ecommerce_Backend.payload;
 
 import com.vasanth.Ecommerce_Backend.model.Category;
 import com.vasanth.Ecommerce_Backend.model.Product;
+import com.vasanth.Ecommerce_Backend.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -15,6 +16,9 @@ public interface CommonMapper {
 
     CategoryDTO toCategoryDTO(Category category);
     Category toCategoryEntity(CategoryDTO categoryDTO);
+
+    UserDTO toUserDTO(User user);
+    User toUserEntity(UserDTO userDTO);
 
 
 }
