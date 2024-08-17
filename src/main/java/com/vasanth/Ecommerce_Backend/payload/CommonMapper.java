@@ -1,5 +1,6 @@
 package com.vasanth.Ecommerce_Backend.payload;
 
+import com.vasanth.Ecommerce_Backend.model.Cart;
 import com.vasanth.Ecommerce_Backend.model.Category;
 import com.vasanth.Ecommerce_Backend.model.Product;
 import com.vasanth.Ecommerce_Backend.model.User;
@@ -19,6 +20,10 @@ public interface CommonMapper {
 
     UserDTO toUserDTO(User user);
     User toUserEntity(UserDTO userDTO);
+
+    CartDTO toCartDTO(Cart cart);
+    Cart toCartEntity(CartDTO cartDTO);
+
 
 
 }

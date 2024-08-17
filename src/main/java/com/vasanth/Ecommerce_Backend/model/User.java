@@ -50,4 +50,7 @@ public class User {
     @JoinTable(name = "user_address",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "address_id"))
     List<Address> addresses = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.MERGE},orphanRemoval = true)
+    private Cart cart;
+
 }

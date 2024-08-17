@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +81,14 @@ public class JWTService {
     public boolean validateToken(String token, UserDetails userDetails){
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public String extractToken(HttpServletRequest request){
+        String bearerToken = request.getHeader("Authorization");
+        if(bearerToken != null && bearerToken.startsWith("Bearer ")){
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 
 
