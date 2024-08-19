@@ -46,7 +46,8 @@ public class Address {
     @Size(min = 5,message = "Building name must have atleast 5 characters")
     private String street;
 
-    @ManyToMany(mappedBy = "addresses")
-    List<User> users = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    User user;
 
 }

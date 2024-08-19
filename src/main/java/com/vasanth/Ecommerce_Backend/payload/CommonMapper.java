@@ -24,6 +24,7 @@ public interface CommonMapper {
     RoleDTO toRoleDTO(Role role);
     Role toRoleEntity(RoleDTO roleDTO);
 
-
+    AddressDTO toAddressDTO(Address address);
+    Address toAddressEntity(AddressDTO addressDTO);
 
 }

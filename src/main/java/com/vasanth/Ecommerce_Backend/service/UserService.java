@@ -92,9 +92,16 @@ public class UserService {
             Set<RoleDTO> roleDTOS = user.getRoles().stream()
                     .map(CommonMapper.INSTANCE::toRoleDTO).collect(Collectors.toSet());
 
+
+            List<AddressDTO> addressDTOS = user.getAddresses().stream().map(
+                    address -> CommonMapper.INSTANCE.toAddressDTO(address)
+            ).toList();
+
             dto.setCartDTO(cartDTO);
             dto.getCartDTO().setProducts(productDTOS);
             dto.setRoles(roleDTOS);
+            dto.setAddress(addressDTOS);
+
             return dto;
 
         }).toList();
@@ -133,10 +140,13 @@ public class UserService {
 
         Set<RoleDTO> roleDTOS = user.getRoles().stream()
                 .map(CommonMapper.INSTANCE::toRoleDTO).collect(Collectors.toSet());
-
+        List<AddressDTO> addressDTOS = user.getAddresses().stream().map(
+                address -> CommonMapper.INSTANCE.toAddressDTO(address)
+        ).toList();
         userDTO.setCartDTO(cartDTO);
         userDTO.getCartDTO().setProducts(productDTOS);
         userDTO.setRoles(roleDTOS);
+        userDTO.setAddress(addressDTOS);
 
         return userDTO;
     }
@@ -168,9 +178,14 @@ public class UserService {
         Set<RoleDTO> roleDTOS = user.getRoles().stream()
                 .map(CommonMapper.INSTANCE::toRoleDTO).collect(Collectors.toSet());
 
+        List<AddressDTO> addressDTOS = user.getAddresses().stream().map(
+                address -> CommonMapper.INSTANCE.toAddressDTO(address)
+        ).toList();
+
         userDTO.setCartDTO(cartDTO);
         userDTO.getCartDTO().setProducts(productDTOS);
         userDTO.setRoles(roleDTOS);
+        userDTO.setAddress(addressDTOS);
 
         return userDTO;
 
