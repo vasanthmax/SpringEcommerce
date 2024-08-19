@@ -34,6 +34,8 @@ public class CartService {
     @Autowired
     private CartItemRepo cartItemRepo;
 
+
+
     public CartDTO addProductToCart(String userEmail, UUID productId, int quantity) {
         User user = userRepo.findByEmail(userEmail);
 
@@ -42,13 +44,6 @@ public class CartService {
         }
 
         Cart cart = cartRepo.findByUserUserId(user.getUserId());
-
-        if(cart == null){
-            cart = new Cart();
-            cart.setUser(user);
-            cartRepo.save(cart);
-        }
-
 
         Product product = productRepo.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product","productId",productId));
@@ -91,6 +86,10 @@ public class CartService {
 
         cartDTO.setProducts(productDTOS);
 
+
+
         return cartDTO;
     }
+
+    
 }

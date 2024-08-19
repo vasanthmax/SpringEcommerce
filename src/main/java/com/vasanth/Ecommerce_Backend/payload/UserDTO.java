@@ -18,6 +18,7 @@ public class UserDTO {
     private String mobileNumber;
     private String email;
     private String password;
-    private Set<Role> roles;
+    private Set<RoleDTO> roles;
     private AddressDTO address;
+    private CartDTO cartDTO;
 }

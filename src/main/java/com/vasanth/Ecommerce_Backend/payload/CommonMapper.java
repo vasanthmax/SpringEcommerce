@@ -1,9 +1,6 @@
 package com.vasanth.Ecommerce_Backend.payload;
 
-import com.vasanth.Ecommerce_Backend.model.Cart;
-import com.vasanth.Ecommerce_Backend.model.Category;
-import com.vasanth.Ecommerce_Backend.model.Product;
-import com.vasanth.Ecommerce_Backend.model.User;
+import com.vasanth.Ecommerce_Backend.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -23,6 +20,9 @@ public interface CommonMapper {
 
     CartDTO toCartDTO(Cart cart);
     Cart toCartEntity(CartDTO cartDTO);
+
+    RoleDTO toRoleDTO(Role role);
+    Role toRoleEntity(RoleDTO roleDTO);
 
 
 
