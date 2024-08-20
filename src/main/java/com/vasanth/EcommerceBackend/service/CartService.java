@@ -210,6 +210,25 @@ public class CartService {
         return "Product" + cartItem.getProduct().getProductName() + " deleted successfully";
 
     }
+
+    public String deleteProductFromCartUsingCartId(UUID cartId, UUID productId) {
+
+
+        Cart cart = cartRepo.findById(cartId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart","cartId",cartId));
+
+        CartItem cartItem = cartItemRepo.findCartItemByProductIAndCartId(cartId,productId);
+
+        cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getSpecialPrice() * cartItem.getQuantity()));
+
+        Product product = cartItem.getProduct();
+        product.setQuantity(product.getQuantity() + cartItem.getQuantity());
+
+        cartItemRepo.deleteCartItemByProductIdAndCartId(cart.getCartId(),productId);
+
+        return "Product" + cartItem.getProduct().getProductName() + " deleted successfully";
+
+    }
 }
 
 

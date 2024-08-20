@@ -2,11 +2,13 @@ package com.vasanth.EcommerceBackend.service;
 
 import com.vasanth.EcommerceBackend.exceptions.APIException;
 import com.vasanth.EcommerceBackend.exceptions.ResourceNotFoundException;
+import com.vasanth.EcommerceBackend.model.Cart;
 import com.vasanth.EcommerceBackend.model.Category;
 import com.vasanth.EcommerceBackend.model.Product;
 import com.vasanth.EcommerceBackend.payload.CommonMapper;
 import com.vasanth.EcommerceBackend.payload.ProductDTO;
 import com.vasanth.EcommerceBackend.payload.ProductResponse;
+import com.vasanth.EcommerceBackend.repo.CartRepo;
 import com.vasanth.EcommerceBackend.repo.CategoryRepo;
 import com.vasanth.EcommerceBackend.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,12 @@ public class ProductService {
 
     @Autowired
     private ProductRepo repo;
+
+    @Autowired
+    private CartRepo cartRepo;
+
+    @Autowired
+    private CartService cartService;
 
     @Autowired
     private FileService fileService;
@@ -136,6 +144,12 @@ public class ProductService {
 
         Product product = repo.findById(productId)
                 .orElseThrow(()-> new ResourceNotFoundException("Product","productId",productId));
+
+        List<Cart> cart = cartRepo.findCartsByProductId(productId);
+
+        cart.forEach(cart1 -> {
+            cartService.deleteProductFromCartUsingCartId(cart1.getCartId(),productId);
+        });
 
         repo.delete(product);
 
