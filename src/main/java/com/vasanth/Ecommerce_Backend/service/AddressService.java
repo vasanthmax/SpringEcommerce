@@ -7,10 +7,12 @@ import com.vasanth.Ecommerce_Backend.payload.AddressDTO;
 import com.vasanth.Ecommerce_Backend.payload.CommonMapper;
 import com.vasanth.Ecommerce_Backend.repo.AddressRepo;
 import com.vasanth.Ecommerce_Backend.repo.UserRepo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AddressService {
@@ -51,5 +53,67 @@ public class AddressService {
 
         return addressDTOS;
 
+    }
+
+    public List<AddressDTO> getAddressesOfUser(String emailId) {
+        User user = userRepo.findByEmail(emailId);
+
+        if (user == null){
+            throw new ResourceNotFoundException("User","emailId",emailId);
+        }
+
+        List<Address> addresses = addressRepo.findByUserUserId(user.getUserId());
+
+        return addresses.stream().map(CommonMapper.INSTANCE::toAddressDTO).toList();
+    }
+
+    public AddressDTO getAddress(String emailId, UUID addressId) {
+        User user = userRepo.findByEmail(emailId);
+
+        if (user == null){
+            throw new ResourceNotFoundException("User","emailId",emailId);
+        }
+
+        Address address = addressRepo.findByAddressIdAndUserUserId(addressId,user.getUserId());
+
+        return CommonMapper.INSTANCE.toAddressDTO(address);
+    }
+
+
+    public AddressDTO updateAddress(String emailId, UUID addressId, Address address) {
+        User user = userRepo.findByEmail(emailId);
+
+        if (user == null){
+            throw new ResourceNotFoundException("User","emailId",emailId);
+        }
+
+        Address savedAddress = addressRepo.findByAddressIdAndUserUserId(addressId,user.getUserId());
+
+        savedAddress.setBuildingName(address.getBuildingName());
+        savedAddress.setStreet(address.getStreet());
+        savedAddress.setCity(address.getCity());
+        savedAddress.setState(address.getState());
+        savedAddress.setPincode(address.getPincode());
+        savedAddress.setCountry(address.getCountry());
+
+        addressRepo.save(savedAddress);
+
+        return CommonMapper.INSTANCE.toAddressDTO(savedAddress);
+    }
+
+
+    public String deleteAddress(UUID addressId, String emailId) {
+
+        User user = userRepo.findByEmail(emailId);
+
+        if (user == null){
+            throw new ResourceNotFoundException("User","emailId",emailId);
+        }
+
+        Address address = addressRepo.findByAddressIdAndUserUserId(addressId,user.getUserId());
+
+        addressRepo.delete(address);
+
+        return "Address with " + address.getAddressId() + "deleted successfully";
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -46,5 +47,47 @@ public class AddressController {
         return new ResponseEntity<List<AddressDTO>>(addressDTOS,HttpStatus.OK);
     }
 
+    @GetMapping("/public/address")
+    public ResponseEntity<List<AddressDTO>> getAddressesOfUser(HttpServletRequest request){
 
+        String token = jwtService.extractToken(request);
+        String emailId = jwtService.extractUserName(token);
+
+        List<AddressDTO> addressDTOS = addressService.getAddressesOfUser(emailId);
+
+        return new ResponseEntity<List<AddressDTO>>(addressDTOS,HttpStatus.OK);
+    }
+
+    @GetMapping("/public/address/{addressId}")
+    public ResponseEntity<AddressDTO> getAddress(@PathVariable("addressId") UUID addressId,HttpServletRequest request){
+
+        String token = jwtService.extractToken(request);
+        String emailId = jwtService.extractUserName(token);
+
+        AddressDTO addressDTO = addressService.getAddress(emailId,addressId);
+
+        return new ResponseEntity<AddressDTO>(addressDTO,HttpStatus.OK);
+
+    }
+
+    @PutMapping("/public/address/{addressId}")
+    public ResponseEntity<AddressDTO> updateAddress(@PathVariable("addressId") UUID addressId, @Valid @RequestBody Address address, HttpServletRequest request){
+        String token = jwtService.extractToken(request);
+        String emailId = jwtService.extractUserName(token);
+
+        AddressDTO addressDTO = addressService.updateAddress(emailId,addressId,address);
+
+        return new ResponseEntity<AddressDTO>(addressDTO,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/public/address/{addressId}")
+    public ResponseEntity<String> deleteAddress(@PathVariable("addressId") UUID addressId,HttpServletRequest request){
+        String token = jwtService.extractToken(request);
+        String emailId = jwtService.extractUserName(token);
+
+        String response = addressService.deleteAddress(addressId,emailId);
+
+        return new ResponseEntity<String>(response,HttpStatus.OK);
+
+    }
 }
