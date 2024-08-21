@@ -27,4 +27,10 @@ public interface CommonMapper {
     AddressDTO toAddressDTO(Address address);
     Address toAddressEntity(AddressDTO addressDTO);
 
+    OrderDTO toOrderDTO(Order order);
+    Order toOrderEntity(OrderDTO orderDTO);
+
+    OrderItemDTO toOrderItemDTO(OrderItem orderItem);
+    OrderItem toOrderItemEntity(Order order);
+
 }

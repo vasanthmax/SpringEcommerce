@@ -72,7 +72,7 @@ public class CartService {
 
         cartItemRepo.save(newCartItem);
 
-        product.setQuantity(product.getQuantity() - quantity);
+//        product.setQuantity(product.getQuantity() - quantity);
         cart.setTotalPrice(cart.getTotalPrice() + (newCartItem.getSpecialPrice() * quantity));
 
         productRepo.save(product);
@@ -165,8 +165,14 @@ public class CartService {
             throw new APIException("Product" + product.getProductName() + "not available in the cart");
         }
 
-        double cartPrice = cart.getTotalPrice() - (cartItem.getSpecialPrice() * cartItem.getQuantity());
         int cartItemQuantity = cartItem.getQuantity() + quantity;
+
+        if (product.getQuantity() <= cartItemQuantity){
+            throw new APIException("You have Reached your Limit");
+        }
+
+        double cartPrice = cart.getTotalPrice() - (cartItem.getSpecialPrice() * cartItem.getQuantity());
+
         cartItem.setSpecialPrice(product.getSpecialPrice());
         cartItem.setQuantity(cartItemQuantity);
         cartItem.setDiscount(product.getDiscount());
@@ -174,7 +180,7 @@ public class CartService {
         cart.setTotalPrice(cartPrice + (cartItem.getSpecialPrice() * cartItemQuantity));
         cartItem = cartItemRepo.save(cartItem);
 
-        product.setQuantity(product.getQuantity() - quantity);
+//        product.setQuantity(product.getQuantity() - quantity);
         productRepo.save(product);
         CartDTO cartDTO = CommonMapper.INSTANCE.toCartDTO(cart);
 
@@ -203,7 +209,7 @@ public class CartService {
         cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getSpecialPrice() * cartItem.getQuantity()));
 
         Product product = cartItem.getProduct();
-        product.setQuantity(product.getQuantity() + cartItem.getQuantity());
+//        product.setQuantity(product.getQuantity() + cartItem.getQuantity());
 
         cartItemRepo.deleteCartItemByProductIdAndCartId(cart.getCartId(),productId);
         System.out.println("Test");
@@ -222,7 +228,7 @@ public class CartService {
         cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getSpecialPrice() * cartItem.getQuantity()));
 
         Product product = cartItem.getProduct();
-        product.setQuantity(product.getQuantity() + cartItem.getQuantity());
+//        product.setQuantity(product.getQuantity() + cartItem.getQuantity());
 
         cartItemRepo.deleteCartItemByProductIdAndCartId(cart.getCartId(),productId);
 
