@@ -5,6 +5,7 @@ import com.vasanth.EcommerceBackend.payload.AddressDTO;
 import com.vasanth.EcommerceBackend.repo.UserRepo;
 import com.vasanth.EcommerceBackend.service.AddressService;
 import com.vasanth.EcommerceBackend.service.JWTService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "E-Commerce")
 public class AddressController {
 
     @Autowired

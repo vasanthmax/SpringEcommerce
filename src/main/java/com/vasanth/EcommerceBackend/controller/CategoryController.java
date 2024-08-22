@@ -5,6 +5,7 @@ import com.vasanth.EcommerceBackend.model.Category;
 import com.vasanth.EcommerceBackend.payload.CategoryDTO;
 import com.vasanth.EcommerceBackend.payload.CategoryResponse;
 import com.vasanth.EcommerceBackend.service.CategoryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "E-Commerce")
 public class CategoryController {
 
     @Autowired

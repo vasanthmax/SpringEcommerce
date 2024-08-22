@@ -5,6 +5,7 @@ import com.vasanth.EcommerceBackend.payload.OrderDTO;
 import com.vasanth.EcommerceBackend.payload.OrderResponse;
 import com.vasanth.EcommerceBackend.service.JWTService;
 import com.vasanth.EcommerceBackend.service.OrderService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "E-Commerce")
 public class OrderController {
 
     @Autowired

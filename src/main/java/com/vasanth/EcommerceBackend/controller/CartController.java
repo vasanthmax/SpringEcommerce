@@ -3,6 +3,7 @@ package com.vasanth.EcommerceBackend.controller;
 import com.vasanth.EcommerceBackend.payload.CartDTO;
 import com.vasanth.EcommerceBackend.service.CartService;
 import com.vasanth.EcommerceBackend.service.JWTService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "E-Commerce")
 public class CartController {
 
     @Autowired

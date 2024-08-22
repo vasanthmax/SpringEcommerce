@@ -5,6 +5,7 @@ import com.vasanth.EcommerceBackend.model.Product;
 import com.vasanth.EcommerceBackend.payload.ProductDTO;
 import com.vasanth.EcommerceBackend.payload.ProductResponse;
 import com.vasanth.EcommerceBackend.service.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "E-Commerce")
 public class ProductController {
 
     @Autowired

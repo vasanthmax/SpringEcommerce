@@ -5,6 +5,7 @@ import com.vasanth.EcommerceBackend.payload.LoginCredentials;
 import com.vasanth.EcommerceBackend.payload.UserDTO;
 import com.vasanth.EcommerceBackend.service.JWTService;
 import com.vasanth.EcommerceBackend.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

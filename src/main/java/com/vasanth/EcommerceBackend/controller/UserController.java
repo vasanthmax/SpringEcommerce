@@ -4,6 +4,7 @@ import com.vasanth.EcommerceBackend.config.AppConstants;
 import com.vasanth.EcommerceBackend.payload.UserDTO;
 import com.vasanth.EcommerceBackend.payload.UserResponse;
 import com.vasanth.EcommerceBackend.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "E-Commerce")
 public class UserController {
 
     @Autowired
