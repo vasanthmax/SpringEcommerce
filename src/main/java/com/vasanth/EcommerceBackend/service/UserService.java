@@ -12,6 +12,7 @@ import com.vasanth.EcommerceBackend.repo.CartRepo;
 import com.vasanth.EcommerceBackend.repo.RoleRepo;
 import com.vasanth.EcommerceBackend.repo.UserRepo;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 public class UserService {
 
@@ -39,6 +41,9 @@ public class UserService {
 
     @Autowired
     private JWTService jwtService;
+
+    @Autowired
+    private CartService cartService;
 
     public UserDTO registerUser(User user) {
 
@@ -198,6 +203,14 @@ public class UserService {
 
         List<CartItem> cartItems = user.getCart().getCartItems();
         UUID cartId = user.getCart().getCartId();
+
+        cartItems.forEach(cartItem -> {
+            UUID productId = cartItem.getProduct().getProductId();
+
+            cartService.deleteProductFromCartUsingCartId(cartId,productId);
+        });
+
+        userRepo.delete(user);
 
         return  "User Deleted Successfully";
     }
